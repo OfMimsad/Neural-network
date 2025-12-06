@@ -4,12 +4,12 @@ import copy
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
-import numpy as np
+import numpy as np 
+"""numpy toye mlp custom estefade nashode ast."""
 
 # ---------------------------
 # Config
-# ---------------------------
-DATA_PATH = r"C:\python_files\Jain.txt"
+DATA_PATH = r"assets/Jain.txt"
 SEED = 42
 EPOCHS = 4000
 LEARNING_RATE = 0.1
@@ -353,45 +353,4 @@ print(f"Activation Function: Sigmoid")
 print(f"Train-Test Split: 70%-30%")
 print("="*60)
 
-# ---------------------------
-# Optional: Visualization
-# ---------------------------
-def plot_decision_boundary(net, X_test, y_test, title="Decision Boundary"):
-    # Create mesh grid
-    x_min, x_max = -3, 3
-    y_min, y_max = -3, 3
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
-                         np.arange(y_min, y_max, 0.1))
-    
-    # Predict for each point in mesh
-    Z = []
-    for x, y in zip(xx.ravel(), yy.ravel()):
-        if STANDARDIZE:
-            point = Matrix([[(x - MEANS[0]) / STDS[0]], 
-                           [(y - MEANS[1]) / STDS[1]]])
-        else:
-            point = Matrix([[x], [y]])
-        pred = net.predict_proba(point)
-        Z.append(pred)
-    
-    Z = np.array(Z).reshape(xx.shape)
-    
-    # Plot
-    plt.figure(figsize=(10, 8))
-    plt.contourf(xx, yy, Z, alpha=0.8, cmap=plt.cm.RdBu, levels=20)
-    plt.colorbar(label='Probability of Class 1')
-    
-    # Plot test points
-    test_points = np.array([[x.data[0][0] for x in X_test], 
-                           [x.data[1][0] for x in X_test]]).T
-    true_labels = [t.data[0][0] for t in y_test]
-    
-    scatter = plt.scatter(test_points[:, 0], test_points[:, 1], c=true_labels, 
-                           cmap=plt.cm.RdBu, edgecolors='black', s=50)
-    plt.legend(handles=scatter.legend_elements()[0], 
-               labels=['Class 0', 'Class 1'])
-    plt.title(title)
-    plt.xlabel('Feature 1 (standardized)' if STANDARDIZE else 'Feature 1')
-    plt.ylabel('Feature 2 (standardized)' if STANDARDIZE else 'Feature 2')
-    plt.show()
 
